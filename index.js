@@ -59,13 +59,10 @@ numbers.forEach(number => {
             firstNum += number.id;
             displayValue.textContent = "";
             displayValue.append(firstNum);
-            /* console.log(firstNum); */
         }else {
-            displayMemory.textContent = firstNum +" "+ operator;
             secondNum += number.id;
             displayValue.textContent = "";
-            displayValue.append(secondNum);
-            /* console.log(secondNum); */
+            displayMemory.textContent = `${firstNum} ${operator} ${secondNum}`
         }
     });
 });
@@ -73,18 +70,18 @@ numbers.forEach(number => {
 
 operators.forEach(op => {
     op.addEventListener("click", ()=> {
-        if (operator.id !== "="){
-            operator = op.textContent;
-            console.log(firstNum);
-            console.log(operator);
-            console.log(secondNum);
+        if (op.id !== "="){
+            operator = op.id;
         }else{
-            
-            operate(operator, firstNum, secondNum)
+
+            console.log(operate(operator, parseInt(firstNum), parseInt(secondNum)))
         }
     })
 })
 
 clearBtn.addEventListener("click", () => {
+    firstNum = ""
+    secondNum = ""
     displayValue.innerHTML = "0";
+    memoryValue.innerHTML = "";
 });
