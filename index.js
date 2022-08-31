@@ -42,15 +42,6 @@ function operate(op, a, b){
             return divide(a, b);
 
       }
-    /* if(op === "+"){
-        return add(a, b);
-    }else if (op === "-"){
-        return substract(a, b);
-    }else if (op === "*"){
-        return multiply(a, b);
-    }else if (op === "/"){
-        return divide(a, b);
-    }; */
 }
 
 numbers.forEach(number => {
@@ -73,8 +64,7 @@ operators.forEach(op => {
         if (op.id !== "="){
             operator = op.id;
         }else{
-
-            console.log(operate(operator, parseInt(firstNum), parseInt(secondNum)))
+            displayValue.textContent = operate(operator, parseInt(firstNum), parseInt(secondNum))
         }
     })
 })
