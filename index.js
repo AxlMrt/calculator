@@ -7,6 +7,7 @@ const displayValue = document.querySelector(".displayValue");
 
 let firstNum = "";
 let secondNum = "";
+let result = ""
 let operator = "";
 
 function add(a, b){
@@ -25,8 +26,6 @@ function divide(a, b){
     return a / b;
 }
 
-//
-
 function operate(op, a, b){
     switch (op){
         case "+":
@@ -40,7 +39,6 @@ function operate(op, a, b){
 
         case "/":
             return divide(a, b);
-
       }
 }
 
@@ -49,6 +47,7 @@ numbers.forEach(number => {
         if (operator === ""){
             firstNum += number.id;
             displayValue.textContent = "";
+            displayMemory.innerHTML = "";
             displayValue.append(firstNum);
         }else {
             secondNum += number.id;
@@ -58,13 +57,18 @@ numbers.forEach(number => {
     });
 });
 
-
 operators.forEach(op => {
     op.addEventListener("click", ()=> {
         if (op.id !== "="){
             operator = op.id;
         }else{
-            displayValue.textContent = operate(operator, parseInt(firstNum), parseInt(secondNum))
+            result = operate(operator, parseInt(firstNum), parseInt(secondNum));
+            firstNum = ""
+            secondNum = ""
+            operator = ""
+            displayValue.innerHTML = "";
+            displayValue.textContent = result;
+
         }
     })
 })
@@ -73,5 +77,5 @@ clearBtn.addEventListener("click", () => {
     firstNum = ""
     secondNum = ""
     displayValue.innerHTML = "0";
-    memoryValue.innerHTML = "";
+    displayMemory.innerHTML = "";
 });
