@@ -1,5 +1,6 @@
 const intBtn = document.querySelectorAll(".btn");
-const display = document.querySelector(".integer")
+const clearBtn = document.querySelector(".clear")
+const display = document.querySelector(".integer");
 
 function add(a, b){
     return a + b;
@@ -37,3 +38,6 @@ intBtn.forEach(button => {
     })
 } )
 
+clearBtn.addEventListener("click", () => {
+    display.innerHTML = "";
+})
