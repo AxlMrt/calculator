@@ -1,4 +1,5 @@
 const intBtn = document.querySelectorAll(".btn");
+const display = document.querySelector(".integer")
 
 function add(a, b){
     return a + b;
@@ -32,6 +33,7 @@ function operate(op, a, b){
 
 intBtn.forEach(button => {
     button.addEventListener("click", () => {
-        console.log(button.id);
+        display.textContent += button.id;
     })
 } )
+
