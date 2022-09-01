@@ -5,10 +5,10 @@ const clearBtn = document.querySelector(".clear");
 const displayMemory = document.querySelector(".memoryValue");
 const displayValue = document.querySelector(".displayValue");
 
-let firstNum = "";
-let secondNum = "";
-let result = ""
+let currentNum = "";
+let previousNum = "";
 let operator = "";
+
 
 function add(a, b){
     return a + b;
@@ -38,11 +38,56 @@ function operate(op, a, b){
             return multiply(a, b);
 
         case "/":
-            return divide(a, b);
+            return roundNumber(divide(a, b));
       }
+
+
+}
+
+function handleNumber(num){
+    if (currentNum.length <= 8){
+        currentNum += num;
+    }
+}
+
+function handleOperator(op){
+    operator = op;
+    previousNum = currentNum;
+    currentNum = "";
 }
 
 numbers.forEach(number => {
+    number.addEventListener("click", () => {
+        handleNumber(number.id);
+        displayValue.textContent = currentNum;
+    })
+})
+
+operators.forEach(op => {
+    op.addEventListener("click", () => {
+        if(op.id !== "="){
+            handleOperator(op.id);
+            displayMemory.textContent = `${previousNum} ${operator}`;
+            displayValue.textContent = currentNum;
+        }else{
+            currentNum = operate(operator, Number(previousNum), Number(currentNum));
+            displayMemory.textContent = "";
+            if (displayMemory.length <= 8){
+                displayValue.textContent = "Too long";
+            }else{
+                displayValue.textContent = currentNum;
+            }
+            
+        }
+        
+    })
+})
+
+function roundNumber(num){
+    return Math.round(num * 1000) / 1000;
+}
+
+/* numbers.forEach(number => {
     number.addEventListener("click", () => {
         if (operator === ""){
             firstNum += number.id;
@@ -52,8 +97,8 @@ numbers.forEach(number => {
         }else {
             secondNum += number.id;
             displayValue.textContent = "";
-            displayMemory.textContent = `${firstNum} ${operator} ${secondNum}`
-        }
+            displayMemory.textContent = `${firstNum} ${operator} ${secondNum}`;
+        };
     });
 });
 
@@ -61,21 +106,20 @@ operators.forEach(op => {
     op.addEventListener("click", ()=> {
         if (op.id !== "="){
             operator = op.id;
-        }else{
-            result = operate(operator, parseInt(firstNum), parseInt(secondNum));
-            firstNum = ""
+        }else {
+            displayValue.textContent = operate(operator, parseInt(firstNum), parseInt(secondNum));
+            firstNum = "";
             secondNum = ""
             operator = ""
             displayValue.innerHTML = "";
-            displayValue.textContent = result;
-
         }
     })
-})
+}) */
 
 clearBtn.addEventListener("click", () => {
-    firstNum = ""
-    secondNum = ""
+    currentNum = ""
+    previousNum = ""
+    operator = ""
     displayValue.innerHTML = "0";
     displayMemory.innerHTML = "";
 });
