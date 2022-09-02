@@ -12,7 +12,6 @@ let currentNum = "";
 let previousNum = "";
 let operator = "";
 
-
 function add(a, b){
     return a + b;
 }
@@ -29,6 +28,7 @@ function divide(a, b){
     return a / b;
 }
 
+//make the calcul
 function operate(op, a, b){
     switch (op){
         case "+":
@@ -44,7 +44,7 @@ function operate(op, a, b){
             return roundNumber(divide(a, b));
       }
 }
-
+//Store the value in currentNum
 function handleNumber(num){
     if (currentNum.length <= 8){
         currentNum += num;
@@ -52,10 +52,12 @@ function handleNumber(num){
 }
 
 function handleOperator(op){
+    // Store the current value in previousNum when an operator is clicked
     if (operator === ""){
         operator = op;
         previousNum = currentNum;
         currentNum = "";
+    // If there is already an operator, do a consecutive calculation
     }else {
         currentNum = operate(operator, Number(previousNum), Number(currentNum));
         previousNum = currentNum;
@@ -65,22 +67,22 @@ function handleOperator(op){
     
     
 }
-
+//Make the decimal to 3 digits
 function roundNumber(num){
     return Math.round(num * 1000) / 1000;
 }
-
+// Add the possibility of a decimal with " . "
 function addDecimal(){
     if(!currentNum.includes(".")){
         currentNum += ".";
     }
 }
-
+// Delete last digit
 function deleteNum(){
     currentNum = currentNum.toString().slice(0, -1);
     displayValue.textContent = currentNum;
 }
-
+// Clear everything
 function clearDisplay(){
     currentNum = ""
     previousNum = ""
@@ -88,7 +90,7 @@ function clearDisplay(){
     displayValue.innerHTML = "0";
     displayMemory.innerHTML = "";
 }
-
+//Store button id in handleNumber and display the value
 numbers.forEach(number => {
     number.addEventListener("click", () => {
         handleNumber(number.id);
@@ -97,12 +99,14 @@ numbers.forEach(number => {
 })
 
 operators.forEach(op => {
-    op.addEventListener("click", () => {
+    op.addEventListener("click", () => { 
         if(op.id !== "="){
+            //If the operator id is not "=", store it and display previousNum and the actual operator
             handleOperator(op.id);
             displayMemory.textContent = `${previousNum} ${operator}`;
             displayValue.textContent = currentNum;
         }else{
+            //If the operator is "=", make function operate, display it and reset the previousNum display
             currentNum = operate(operator, Number(previousNum), Number(currentNum));
             displayMemory.textContent = "";
             if (displayMemory.length <= 8){
