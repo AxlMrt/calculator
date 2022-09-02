@@ -69,5 +69,8 @@ main button:hover{
     width: 100%;
     padding: 10px;
     font-size: 20px;
+  }
+
+  .footer a{
     text-decoration: none;
   }
